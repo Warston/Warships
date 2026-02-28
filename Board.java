@@ -43,22 +43,28 @@ class Board{
 		}
 	}
 
-	public void placeShip(int length, int[] pos){
+	public boolean placeShip(int length, int[] pos){
 		//check for collision
 		boolean collision = false;
-		if (pos[0] + length > 9)
-			collision = true;
+		if (pos[1] + length > 10){
+			System.out.println("Cannot place out of bounds!");
+			return false;
+		}
 		for(int i = 0; i < length; i++){
-			if (board[pos[0]][pos[1] + i].getContents() != " ")
+			if (board[pos[0]][pos[1] + i].getOccupied() == true)
 				collision = true;
 		}
-		if (collision == true)
-			System.out.println("Cannot place out of bounds or colliding with other ships!");
+		if (collision == true){
+			return false;
+		}
 		
 
 		for(int i = 0; i < length; i++){
-			board[pos[0]][pos[1] + i].setContents("X");
+			board[pos[0]][pos[1] + i].setContents("\u25cf");
+			board[pos[0]][pos[1] + i].setOccupied(true);
+
 		}
+		return true;
 	
 	}
 }

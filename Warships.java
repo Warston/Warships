@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 class Warships{
 	public static void main(String[] args){
+		clearScreen();
 		Scanner kb = new Scanner(System.in);
 		/*
 		player1.printDefenseBoard();
@@ -15,7 +16,15 @@ class Warships{
 		int userSelection = 0;
 		while(true){
 			UserInterface.printMainMenu();
-			userSelection = kb.nextInt();
+			try {
+				userSelection = kb.nextInt();
+			}
+			catch(Exception e){
+				clearScreen();
+				System.out.println("Invalid input");
+				kb.nextLine();
+				continue;
+			}
 			menuSelection(userSelection);
 		}
 
