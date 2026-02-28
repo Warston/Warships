@@ -2,12 +2,15 @@ class Player{
 	private Board defenseBoard = new Board();
 	private Board attackBoard = new Board();
 	private String name = "";
+	private Fleet fleet = new Fleet();
 
 
 	Player(String newName){
 		defenseBoard = new Board();
 		attackBoard = new Board();
 		name = newName;
+		fleet = new Fleet();
+
 	}
 
 	//getters
@@ -24,6 +27,10 @@ class Player{
 		return name;
 	}
 
+	public Fleet getFleet(){
+		return fleet;
+	}
+
 	//setters
 	
 	public void setDefenseBoard(Board newBoard){
@@ -38,5 +45,14 @@ class Player{
 		name = newName;
 	}
 
+	//other methods
+	
+	public void printDefenseBoard(){
+		defenseBoard.printBoard();
+	}
+
+	public void printAttackBoard(){
+		attackBoard.printBoard();
+	}
 
 }

@@ -1,6 +1,7 @@
 class Ship{
 	private int length = 0;
 	private String name = "";
+	//position starts from the left most or top most coordinate depending on vert/horizontal
 	private int position[] = {};
 	private boolean horizontal = false;
 
