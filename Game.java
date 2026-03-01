@@ -7,14 +7,8 @@ class Game{
 	private Scanner kb = new Scanner (System.in);
 
 	Game(){
-		player1 = new Player("Player1");
-		player2 = new Cpu("CPU");
-		player1.fleetSetup();		
-		player1.printDefenseBoard();
-		System.out.println();
-		player2.fleetSetup();
-		System.out.println("CPU Board");
-		player2.printDefenseBoard();
+		gameStart();
+		gameLoop();
 
 		gameOver();
 	}
@@ -28,6 +22,30 @@ class Game{
 		return player2;
 	}
 
+	void gameStart(){
+		player1 = new Player("Player1");
+		player2 = new Cpu("CPU");
+		player1.fleetSetup();		
+		player1.printDefenseBoard();
+		System.out.println();
+		player2.fleetSetup();
+		System.out.println("Sortie underway! Select your target!");
+	}
+
+	void gameLoop(){
+		int[] pos = {0,0};
+		for(int i = 1; i <= 3; i++){
+			System.out.print("Enter coordinates: ");
+			pos[0] = kb.nextInt();
+			pos[1] = kb.nextInt();
+			player1.attack(player2, pos);		
+			System.out.println("*DEBUG*CPU Board");
+			player2.printDefenseBoard();
+			System.out.println("*DEBUG*Attack Board");
+			player1.printAttackBoard();
+		}
+		
+	}
 
 	void gameOver(){
 		System.out.println("Game Over!");

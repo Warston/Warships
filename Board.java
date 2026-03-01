@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 class Board{
 	private Node[][] board; 
 
@@ -46,7 +48,7 @@ class Board{
 	public boolean placeShip(int length, int[] pos){
 		//check for collision
 		boolean collision = false;
-		if (pos[1] + length > 10){
+		if (pos[1] + length > 10 || pos[0] > 9){
 			System.out.println("Cannot place out of bounds!");
 			return false;
 		}

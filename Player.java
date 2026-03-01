@@ -98,4 +98,20 @@ class Player{
 		
 	}
 
+	void attack(Player target, int[] pos){
+		Node targetNode = target.getDefenseBoard().getBoard()[pos[0]][pos[1]];
+		Node attackBoardNode = attackBoard.getBoard()[pos[0]][pos[1]];
+		
+		if (targetNode.getOccupied() == true){
+			System.out.printf("Strike at %d,%d hit confirmed!\n", pos[0], pos[1]);
+			targetNode.setContents("\u2613");
+			attackBoardNode.setContents("\u2611");
+		}
+		else {
+			System.out.printf("Strike at %d,%d missed!\n", pos[0], pos[1]);
+			attackBoardNode.setContents("\u25ef");
+
+		}
+	}
+
 }

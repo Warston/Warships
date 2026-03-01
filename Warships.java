@@ -2,6 +2,8 @@ import java.util.Scanner;
 
 class Warships{
 	public static void main(String[] args){
+		
+
 		clearScreen();
 		Scanner kb = new Scanner(System.in);
 		/*
