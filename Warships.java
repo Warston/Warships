@@ -45,6 +45,12 @@ class Warships{
 				break;
 			case 4:
 				System.exit(0);
+			case 5:
+				Scanner kb = new Scanner(System.in);
+				String tempString = kb.nextLine();
+				char alphaChar = tempString.charAt(0);
+				System.out.println(UserInterface.numCheck(alphaChar));
+				break;
 			default:
 				System.out.println("Invalid Option");
 

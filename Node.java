@@ -3,6 +3,7 @@ class Node{
 	private boolean occupied = false;
 	private boolean hit = false;
 	private String contents = " ";
+	private String occupant = "";
 
 	Node(int[] pos){
 		position = pos;
@@ -28,6 +29,10 @@ class Node{
 		return hit;
 	}
 
+	public String getOccupant(){
+		return occupant;
+	}
+
 	public void setContents(String newContents){
 		contents = newContents;
 	}
@@ -42,6 +47,10 @@ class Node{
 
 	public void setHit(boolean newHit){
 		hit = newHit;
+	}
+
+	public void setOccupant(String ship){
+		occupant = ship;
 	}
 
 	

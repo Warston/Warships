@@ -36,9 +36,11 @@ class Game{
 		int[] pos = {0,0};
 		for(int i = 1; i <= 3; i++){
 			System.out.print("Enter coordinates: ");
-			pos[0] = kb.nextInt();
-			pos[1] = kb.nextInt();
-			player1.attack(player2, pos);		
+			pos = UserInterface.posInput(kb);
+			if (!player1.attack(player2, pos)){
+				System.out.println("Cannot strike the same coordinate twice!");
+				continue;
+			}
 			System.out.println("*DEBUG*CPU Board");
 			player2.printDefenseBoard();
 			System.out.println("*DEBUG*Attack Board");
