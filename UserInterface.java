@@ -35,6 +35,10 @@ class UserInterface{
 		System.out.println(art);
 	}
 
+	//This function takes in user coordinate inputs
+	//accepts either 2 integers or a single character and an integer
+	//if two integers are used it uses the first as the row coordinate and the second as the column
+	//if a character is used it is automatically used as the column coordinate as shown by the game board
 	public static int[] posInput(Scanner kb){
 		while (true){
 			String lineInput = "";
@@ -81,6 +85,7 @@ class UserInterface{
 
 	}
 
+	//This function is used to check if a character is in the alphabet
 	public static boolean alphaCheck(char char1){
 		if (char1 < '\u0041')
 			return false;
@@ -92,6 +97,7 @@ class UserInterface{
 		return true;
 	
 	}
+	//This function checks if a character is a numeral
 	public static boolean numCheck(char char1){
 		if (char1 < '\u0030')
 			return false;

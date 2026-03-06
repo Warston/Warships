@@ -34,13 +34,20 @@ class Game{
 
 	void gameLoop(){
 		int[] pos = {0,0};
-		for(int i = 1; i <= 3; i++){
+		while(true){
 			System.out.print("Enter coordinates: ");
 			pos = UserInterface.posInput(kb);
+			//attempts to execute attack if the player input non duplicate coordinates
 			if (!player1.attack(player2, pos)){
 				System.out.println("Cannot strike the same coordinate twice!");
 				continue;
 			}
+			
+			if (player2.fleetDestroyed()){
+				System.out.println("Game Over! Player 1 Wins!\n");
+				break;
+			}
+			
 			System.out.println("*DEBUG*CPU Board");
 			player2.printDefenseBoard();
 			System.out.println("*DEBUG*Attack Board");
@@ -55,6 +62,11 @@ class Game{
 		kb.nextLine();
 		kb.nextLine();
 		Warships.clearScreen();
+	}
+
+	boolean checkFleetDeath(Fleet playerFleet){
+		return false;
+
 	}
 
 

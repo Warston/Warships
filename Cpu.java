@@ -7,19 +7,21 @@ class Cpu extends Player {
 	}
 
 	void fleetSetup(){
-		shipSetup("Battleship", 4); 
-		shipSetup("Cruiser", 3); 
-		shipSetup("Destroyer", 2); 
+		for (Ship ship : getFleet().getFleetList()){
+			shipSetup(ship);
+		}
 
 	}
 
-	void shipSetup(String name, int length){
+	void shipSetup(Ship ship){
 		int pos[] = {0,0};
+		String name = ship.getName();
+		int length = ship.getLength();
 		while (true){
 			pos[0] = (int) (Math.random() * (9 - length));
 			pos[1] = (int) (Math.random() * (9 - length));
 			
-			if (getDefenseBoard().placeShip(length,pos) == false)
+			if (getDefenseBoard().placeShip(length, pos, ship) == false)
 				continue;
 			getFleet().getShip(name).setPosition(pos);
 			break;

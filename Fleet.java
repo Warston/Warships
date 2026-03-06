@@ -1,27 +1,31 @@
+import java.util.List;
+import java.util.ArrayList;
+
 class Fleet{
 
-	private Ship battleship = new Ship("Battleship", 4);
-	private Ship cruiser = new Ship("Cruiser", 3);
-	private Ship destroyer = new Ship("Destroyer", 2);
+	private List<Ship> fleet = new ArrayList<>();
 
 	Fleet(){
-		Ship battleship = new Ship("Battleship", 4);
-		Ship cruiser = new Ship("Cruiser", 3);
-		Ship destoyer = new Ship("Destroyer", 2);
+
+		fleet.add(new Ship("Battleship", 4));
+		fleet.add(new Ship("Cruiser", 3));
+		fleet.add(new Ship("Destroyer", 2));
 	}
 
 
 	public Ship getShip(String shipName){
-		switch (shipName){
-			case "Battleship":
-				return battleship;
-			case "Cruiser":
-				return cruiser;
-			case "Destroyer":
-				return destroyer;
-			default:
-				return null;
+		for (Ship s : fleet){
+			if (s.getName().equals(shipName)){
+				return s;
+			}
 		}
+		System.out.println("Error! Ship not found!");
+		return null;
+
 	}
 
+	
+	public List<Ship> getFleetList(){
+		return fleet;
+	}
 }

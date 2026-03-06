@@ -3,13 +3,15 @@ class Node{
 	private boolean occupied = false;
 	private boolean hit = false;
 	private String contents = " ";
-	private String occupant = "";
+	private Ship occupant = null;
+	private int hullIndex = 0;
 
 	Node(int[] pos){
 		position = pos;
 		occupied = false;
 		hit = false;
 		contents = " ";
+		occupant = null;
 	}
 
 
@@ -29,8 +31,12 @@ class Node{
 		return hit;
 	}
 
-	public String getOccupant(){
+	public Ship getOccupant(){
 		return occupant;
+	}
+
+	public int getHullIndex(){
+		return hullIndex;
 	}
 
 	public void setContents(String newContents){
@@ -49,9 +55,14 @@ class Node{
 		hit = newHit;
 	}
 
-	public void setOccupant(String ship){
+	public void setOccupant(Ship ship){
 		occupant = ship;
 	}
+
+	public void setHullIndex(int index){
+		hullIndex = index;
+	}
+	
 
 	
 

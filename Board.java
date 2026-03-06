@@ -45,7 +45,7 @@ class Board{
 		}
 	}
 
-	public boolean placeShip(int length, int[] pos){
+	public boolean placeShip(int length, int[] pos,Ship ship){
 		//check for collision
 		boolean collision = false;
 		if (pos[1] + length > 10 || pos[0] > 9){
@@ -64,7 +64,9 @@ class Board{
 		for(int i = 0; i < length; i++){
 			board[pos[0]][pos[1] + i].setContents("\u25cf");
 			board[pos[0]][pos[1] + i].setOccupied(true);
-
+			board[pos[0]][pos[1] + i].setOccupant(ship);
+			board[pos[0]][pos[1] + i].setHullIndex(i);
+			board[pos[0]][pos[1] + i].getOccupant().setHullAt(i, false);
 		}
 		return true;
 	
