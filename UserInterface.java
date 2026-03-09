@@ -85,6 +85,13 @@ class UserInterface{
 
 	}
 
+	public static char orientationInput(){
+		Scanner kb = new Scanner(System.in);
+		String input = kb.nextLine();
+		return input.charAt(0);
+
+	}
+
 	//This function is used to check if a character is in the alphabet
 	public static boolean alphaCheck(char char1){
 		if (char1 < '\u0041')

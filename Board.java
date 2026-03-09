@@ -45,15 +45,26 @@ class Board{
 		}
 	}
 
-	public boolean placeShip(int length, int[] pos,Ship ship){
+	public boolean placeShip(int length, int[] pos,Ship ship, boolean vertical){
 		//check for collision
 		boolean collision = false;
-		if (pos[1] + length > 10 || pos[0] > 9){
+		int vert = 0;
+		int horiz = 0;
+
+		if (vertical){
+			vert = 1;
+			horiz = 0;
+		}
+		else {
+			vert = 0;
+			horiz = 1;
+		}
+		if ((pos[1] * horiz) + (pos[0] * vert) + length > 10 || (pos[0] * horiz) + (pos[1] * vert) > 9){
 			System.out.println("Cannot place out of bounds!");
 			return false;
 		}
 		for(int i = 0; i < length; i++){
-			if (board[pos[0]][pos[1] + i].getOccupied() == true)
+			if (board[pos[0] + (vert * i)][pos[1] + (horiz * i)].getOccupied() == true)
 				collision = true;
 		}
 		if (collision == true){
@@ -62,11 +73,11 @@ class Board{
 		
 
 		for(int i = 0; i < length; i++){
-			board[pos[0]][pos[1] + i].setContents("\u25cf");
-			board[pos[0]][pos[1] + i].setOccupied(true);
-			board[pos[0]][pos[1] + i].setOccupant(ship);
-			board[pos[0]][pos[1] + i].setHullIndex(i);
-			board[pos[0]][pos[1] + i].getOccupant().setHullAt(i, false);
+			board[pos[0] + (vert * i)][pos[1] + (horiz * i)].setContents("\u25cf");
+			board[pos[0] + (vert * i)][pos[1] + (horiz * i)].setOccupied(true);
+			board[pos[0] + (vert * i)][pos[1] + (horiz * i)].setOccupant(ship);
+			board[pos[0] + (vert * i)][pos[1] + (horiz * i)].setHullIndex(i);
+			board[pos[0] + (vert * i)][pos[1] + (horiz * i)].getOccupant().setHullAt(i, false);
 		}
 		return true;
 	

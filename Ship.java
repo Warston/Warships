@@ -3,7 +3,7 @@ class Ship{
 	private String name = "";
 	//position starts from the left most or top most coordinate depending on vert/horizontal
 	private int position[] = {};
-	private boolean horizontal = false;
+	private boolean vertical = false;
 	private boolean destroyed = false;
 	//A value of true means that section of the hull is destroyed
 	private boolean hull[] = {};
@@ -28,8 +28,8 @@ class Ship{
 		return position;
 	}
 
-	public boolean getHorizontal(){
-		return horizontal;
+	public boolean getVertical(){
+		return vertical;
 	}
 
 	public boolean getDestroyed(){

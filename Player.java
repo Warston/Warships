@@ -77,6 +77,8 @@ class Player{
 		int pos[] = {0,0};
 		String name = ship.getName();
 		int length = ship.getLength();
+		boolean vertical = false; 
+		char lineInput = ' ';
 		while (true){
 			System.out.printf("Input %s Coordinate (Length %d)", name, length);
 			try{
@@ -84,10 +86,30 @@ class Player{
 			}
 			catch(Exception e){
 				System.out.println("Invalid Input!");
-				kb.nextLine();
 				continue;
 			}
-			if (getDefenseBoard().placeShip(length, pos, ship) == false){
+			System.out.printf("Enter H or V for horizontal or vertical placement.");
+			try{
+				lineInput = UserInterface.orientationInput();
+				switch (lineInput) {
+					case 'v':
+					case 'V':
+						vertical  = true;
+						break;
+					case 'h':
+					case 'H':
+						vertical = false;
+						break;
+					default:
+						throw new NullPointerException("Invalid Input!");
+				}
+				vertical = (lineInput == 'v' || lineInput == 'V') ? true : false; 
+			}
+			catch(Exception e){
+				System.out.println("Invalid Input!");
+				continue;
+			}
+			if (getDefenseBoard().placeShip(length, pos, ship, vertical) == false){
 				System.out.println("Cannot collide with other ships!");
 				continue;
 			}

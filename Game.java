@@ -60,7 +60,6 @@ class Game{
 		System.out.println("Game Over!");
 		System.out.println("Press any key to continue");
 		kb.nextLine();
-		kb.nextLine();
 		Warships.clearScreen();
 	}
 
