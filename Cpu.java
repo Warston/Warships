@@ -31,6 +31,46 @@ class Cpu extends Player {
 		}
 	}
 
+	boolean attack(Player target, int[] pos){
+		pos = new int[2];
+
+		while (true) {
+			pos = cpuTargeting();
+			Node targetNode = target.getDefenseBoard().getBoard()[pos[0]][pos[1]];
+			Node attackBoardNode = getAttackBoard().getBoard()[pos[0]][pos[1]];
+			if (targetNode.getHit())
+				continue;	
+
+			if (targetNode.getOccupied() == true){
+				String targetName = targetNode.getOccupant().getName();
+				System.out.printf("Enemy has struck our %s at %d,%d!\n",targetName, pos[0], pos[1]);
+				targetNode.setContents("\u2613");
+				targetNode.setHit(true);
+				attackBoardNode.setContents("\u2611");
+				targetNode.getOccupant().setHullAt(targetNode.getHullIndex(), true);
+				if (targetNode.getOccupant().checkShipDestroyed()){
+					targetNode.getOccupant().setDestroyed(true);
+					System.out.printf("%s's %s has been destroyed!\n", target.getName(), targetName);
+				}
+			}
+			else {
+				System.out.printf("Enemy's attack at %d,%d missed!\n", pos[0], pos[1]);
+				attackBoardNode.setContents("\u25ef");
+				targetNode.setHit(true);
+
+			}
+			return true;
+		}
+	}
+
+	public int[] cpuTargeting(){
+		int pos[] = {0,0};
+		pos[0] = (int) (Math.random() * (9));
+		pos[1] = (int) (Math.random() * (9));
+		return pos;
+
+		
+	}
 
 }
 

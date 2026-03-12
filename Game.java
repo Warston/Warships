@@ -48,10 +48,19 @@ class Game{
 				break;
 			}
 			
+			player2.attack(player1, pos);
+			
+			if (player1.fleetDestroyed()){
+				System.out.println("Game Over! Player 2 Wins!\n");
+				break;
+			}
+			
 			System.out.println("*DEBUG*CPU Board");
 			player2.printDefenseBoard();
-			System.out.println("*DEBUG*Attack Board");
+			System.out.println("Attack Board");
 			player1.printAttackBoard();
+			System.out.println("Defense Board");
+			player1.printDefenseBoard();
 		}
 		
 	}
