@@ -1,5 +1,9 @@
+import java.util.List;
+import java.util.ArrayList;
+
 class Cpu extends Player {
 	private int difficulty = 1;
+	private List<CPUTargetTracking> hitTargets = new ArrayList<>();
 	
 	Cpu(String newName){
 		super(newName);
@@ -30,6 +34,10 @@ class Cpu extends Player {
 			break;
 		}
 	}
+
+	//executes an attack on the target player
+	//the pos paramater is not used but is needed for polymorphism
+	
 
 	boolean attack(Player target, int[] pos){
 		pos = new int[2];
@@ -62,6 +70,8 @@ class Cpu extends Player {
 			return true;
 		}
 	}
+	
+	//Basic targeting that randomly selects an unhit node to strike
 
 	public int[] cpuTargeting(){
 		int pos[] = {0,0};
@@ -70,6 +80,16 @@ class Cpu extends Player {
 		return pos;
 
 		
+	}
+
+	//Advanced targeting that will attempt to destroy a ship that is struck
+
+	public int[] advancedCpuTargeting(){
+		int pos[] = {0,0};
+		if 
+
+		return pos;
+
 	}
 
 }
