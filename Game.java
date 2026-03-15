@@ -55,7 +55,9 @@ class Game{
 				break;
 			}
 			
-			System.out.println("*DEBUG*CPU Board");
+			System.out.println("*DEBUG* Attack CPU Board");
+			player2.printAttackBoard();
+			System.out.println("*DEBUG*Defense CPU Board");
 			player2.printDefenseBoard();
 			System.out.println("Attack Board");
 			player1.printAttackBoard();

@@ -7,6 +7,7 @@ class CPUTargetTracking {
 	private String shipName = " ";
 	private List<int []>  hits = new ArrayList<>();
 	private boolean vertical = false;
+	private boolean horizontal = false;
 	
 	CPUTargetTracking(Ship shipHit, int[] hitPos){
 
@@ -37,6 +38,10 @@ class CPUTargetTracking {
 		return vertical;
 	}
 
+	public boolean getHorizontal(){
+		return horizontal;
+	}
+
 	//setters
 	
 	public void setShip(Ship newShip){
@@ -49,6 +54,15 @@ class CPUTargetTracking {
 
 	public void setVertical(boolean vert){
 		vertical = vert;
+	}
+
+	public void setHorizontal(boolean horiz){
+		horizontal = horiz;
+	}
+	//other methods
+	
+	public void addHit (int[] newHits){
+		hits.add(newHits);
 	}
 
 
