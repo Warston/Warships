@@ -3,6 +3,7 @@ import java.util.HashMap;
 class ColHash{
 
 		static HashMap<Character, Integer> colMap = new HashMap<>();
+		static HashMap<Integer, Character> intToCharMap = new HashMap<>();
 
 		static{
 			colMap.put('a', 0);
@@ -37,10 +38,25 @@ class ColHash{
 			colMap.put('7', 7);
 			colMap.put('8', 8);
 			colMap.put('9', 9);
+
+			intToCharMap.put(0, 'A');
+			intToCharMap.put(1, 'B');
+			intToCharMap.put(2, 'C');
+			intToCharMap.put(3, 'D');
+			intToCharMap.put(4, 'E');
+			intToCharMap.put(5, 'F');
+			intToCharMap.put(6, 'G');
+			intToCharMap.put(7, 'H');
+			intToCharMap.put(8, 'I');
+			intToCharMap.put(9, 'J');
 		}
 
 		public static int getHash(char col){
 			return colMap.get(col);
+		}
+
+		public static int intToChar(int num){
+			return intToCharMap.get(num);
 		}
 
 

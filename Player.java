@@ -129,7 +129,7 @@ class Player{
 		
 		if (targetNode.getOccupied() == true){
 			String targetName = targetNode.getOccupant().getName();
-			System.out.printf("Strike at %d,%d hit confirmed!\n", pos[0], pos[1]);
+			System.out.printf("Strike at %c%d hit confirmed!\n", ColHash.intToChar(pos[1]), pos[0]);
 			System.out.printf("Strike on %s confirmed!\n", targetName);
 			targetNode.setContents("\u2613");
 			targetNode.setHit(true);
@@ -141,7 +141,7 @@ class Player{
 			}
 		}
 		else {
-			System.out.printf("Strike at %d,%d missed!\n", pos[0], pos[1]);
+			System.out.printf("Strike at %c%d missed!\n", ColHash.intToChar(pos[1]), pos[0]);
 			attackBoardNode.setContents("\u25ef");
 			targetNode.setHit(true);
 

@@ -5,9 +5,9 @@ class Cpu extends Player {
 	private int difficulty = 1;
 	private List<CPUTargetTracking> hitTargets = new ArrayList<>();
 	
-	Cpu(String newName){
+	Cpu(String newName, int diffSelection){
 		super(newName);
-		difficulty = 1;
+		difficulty = diffSelection;
 	}
 
 	void fleetSetup(){
@@ -43,7 +43,7 @@ class Cpu extends Player {
 		pos = new int[2];
 
 		while (true) {
-			if (hitTargets.size() == 0) {
+			if (hitTargets.size() == 0 || difficulty == 1) {
 				pos = cpuTargeting();
 			} else {
 				pos = advancedCpuTargeting(target);
@@ -57,7 +57,7 @@ class Cpu extends Player {
 				boolean isNewTarget = true;
 				String targetName = targetNode.getOccupant().getName();
 
-				System.out.printf("Enemy has struck our %s at %d,%d!\n",targetName, pos[0], pos[1]);
+				System.out.printf("Enemy has struck our %s at %c%d!\n",targetName, ColHash.intToChar(pos[1]), pos[0]);
 
 				targetNode.setContents("\u2613");
 				targetNode.setHit(true);
@@ -67,6 +67,15 @@ class Cpu extends Player {
 					if (trackedTarget.getShip() == targetNode.getOccupant()) {
 						isNewTarget = false;
 						trackedTarget.getHits().add(pos);
+						if (trackedTarget.getHits().get(0)[0] == trackedTarget.getHits().get(1)[0]){
+							trackedTarget.setHorizontal(true);
+							System.out.println("*DEBUG* Horizontal True!");
+						}
+						else {
+							trackedTarget.setVertical(true);
+							System.out.println("*DEBUG* Vertical True!");
+						}
+
 					}
 				}
 
@@ -80,9 +89,14 @@ class Cpu extends Player {
 				}
 			}
 			else {
-				System.out.printf("Enemy's attack at %d,%d missed!\n", pos[0], pos[1]);
+				System.out.printf("Enemy's attack at %c%d missed!\n", ColHash.intToChar(pos[1]), pos[0]);
 				attackBoardNode.setContents("\u25ef");
 				targetNode.setHit(true);
+				if (hitTargets.size() == 0){
+				} else if (hitTargets.get(0).getHits().size() == 0){
+				} else {
+					hitTargets.get(0).setEndOfShip(true);
+				}
 
 			}
 			return true;
@@ -93,8 +107,8 @@ class Cpu extends Player {
 
 	public int[] cpuTargeting(){
 		int pos[] = {0,0};
-		pos[0] = (int) (Math.random() * (9));
-		pos[1] = (int) (Math.random() * (9));
+		pos[0] = (int) (Math.random() * (10));
+		pos[1] = (int) (Math.random() * (10));
 		return pos;
 
 		
@@ -106,39 +120,55 @@ class Cpu extends Player {
 		int pos[] = {0,0};
 		Node[][] enemyDefenseBoard = targetPlayer.getDefenseBoard().getBoard();
 		CPUTargetTracking huntedTarget = hitTargets.get(0);
-		int[] latestHit = huntedTarget.getHits().get(huntedTarget.getHits().size() - 1);
+		int[] latestHit = {0,0};
+		if (huntedTarget.getEndOfShip() == false){
+			latestHit = huntedTarget.getHits().get(huntedTarget.getHits().size() - 1);
+		} else {
+			latestHit = huntedTarget.getHits().get(0);
+			huntedTarget.setEndOfShip(false);
+		}
+
 		if (hitTargets.size() == 0)
 			System.out.println("Something went wrong!");
 
 		//search right of latest hit
 		if (latestHit[1] + 1 > 9 || huntedTarget.getVertical() == true) {
+			//System.out.println("*DEBUG* Cant go Right!");
 		} else if (enemyDefenseBoard[latestHit[0]][latestHit[1] + 1].getHit() == false){
 			pos[0] = latestHit[0]; 
 			pos[1] = latestHit[1] + 1;
+			//System.out.println("*DEBUG* Going Right!");
 			return pos;
+
 		}
 
 		//search below latest hit
 		if (latestHit[0] + 1 > 9 || huntedTarget.getHorizontal() == true) {
+			//System.out.println("*DEBUG* Can't go down!");
 		} else if (enemyDefenseBoard[latestHit[0] + 1][latestHit[1]].getHit() == false){
 			pos[0] = latestHit[0] + 1; 
 			pos[1] = latestHit[1];
+			//System.out.println("*DEBUG* Going down!");
 			return pos;
 		}
 
 		//search to left of latest hit
 		if (latestHit[1] - 1 < 0 || huntedTarget.getVertical() == true) {
+			//System.out.println("*DEBUG* Can't go left!");
 		} else if (enemyDefenseBoard[latestHit[0]][latestHit[1] - 1].getHit() == false){
 			pos[0] = latestHit[0]; 
 			pos[1] = latestHit[1] - 1;
+			//System.out.println("*DEBUG* Going left!");
 			return pos;
 		}
 
 		//search above latest hit
-		if (latestHit[0] - 1 < 0 || huntedTarget.getVertical() == true){
+		if (latestHit[0] - 1 < 0 || huntedTarget.getHorizontal() == true){
+			//System.out.println("*DEBUG* Can't go up!");
 		} else if (enemyDefenseBoard[latestHit[0] - 1][latestHit[1]].getHit() == false){
 			pos[0] = latestHit[0] - 1; 
 			pos[1] = latestHit[1];
+			//System.out.println("*DEBUG* Going up!");
 			return pos;
 		}
 

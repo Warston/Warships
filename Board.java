@@ -31,14 +31,14 @@ class Board{
 		int row = 0;
 		System.out.print("   ");
 		for (char col = 'A'; col <= 'J'; col++){
-			System.out.print(col + "   ");
+			System.out.print(col + "  ");
 		}
 		System.out.println();
 		for (Node[] x : board) {
 			System.out.print(row + " ");
 			row++;
 			for (Node y : x) {
-				System.out.printf("[%s] ", y.getContents());
+				System.out.printf("[%s]", y.getContents());
 			}
 			System.out.println();
 
@@ -71,9 +71,32 @@ class Board{
 			return false;
 		}
 		
+		String contentSymbol = "\u25cf";
 
 		for(int i = 0; i < length; i++){
-			board[pos[0] + (vert * i)][pos[1] + (horiz * i)].setContents("\u25cf");
+			if (vertical == true) {
+				if (i == 0)
+					contentSymbol = "\u25b2";
+
+				if (i > 0 && i < length - 1)
+					contentSymbol = "\u25a0";
+
+				if (i == length - 1)	
+					contentSymbol = "\u25bc";				
+			}
+
+			if (vertical == false) {
+				if (i == 0)
+					contentSymbol = "\u25c0";
+
+				if (i > 0 && i < length - 1)
+					contentSymbol = "\u25a0";
+
+				if (i == length - 1)
+					contentSymbol = "\u25b6";				
+			}
+
+			board[pos[0] + (vert * i)][pos[1] + (horiz * i)].setContents(contentSymbol);
 			board[pos[0] + (vert * i)][pos[1] + (horiz * i)].setOccupied(true);
 			board[pos[0] + (vert * i)][pos[1] + (horiz * i)].setOccupant(ship);
 			board[pos[0] + (vert * i)][pos[1] + (horiz * i)].setHullIndex(i);

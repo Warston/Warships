@@ -37,20 +37,16 @@ class Warships{
 		clearScreen();
 		switch(choice){
 			case 1:
-				Game gameInstance = new Game();
+				newGame();
 				break;
+			/*
 			case 2:
 			case 3:
 				System.out.println("Feature not yet implemented");
 				break;
-			case 4:
+			*/
+			case 2:
 				System.exit(0);
-			case 5:
-				Scanner kb = new Scanner(System.in);
-				String tempString = kb.nextLine();
-				char alphaChar = tempString.charAt(0);
-				System.out.println(UserInterface.numCheck(alphaChar));
-				break;
 			default:
 				System.out.println("Invalid Option");
 
@@ -61,5 +57,31 @@ class Warships{
 	public static void clearScreen(){
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
+	}
+
+	public static void newGame(){
+		Scanner kb = new Scanner(System.in);
+		int diffSelection = 1;
+		while (true) {
+			System.out.println("1(Easy) 2(Hard)");
+			System.out.println("Enter Difficulty: ");
+			try {
+				diffSelection = kb.nextInt();
+				if (diffSelection != 1 && diffSelection != 2) {
+					System.out.println("Invalid input!");
+					continue;
+				} else
+					break;
+			}
+			catch(Exception e){
+				clearScreen();
+				System.out.println("Invalid input");
+				kb.nextLine();
+				continue;
+			}
+		}
+
+		Game gameInstance = new Game(diffSelection);
+	
 	}
 }

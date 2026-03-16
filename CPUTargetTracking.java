@@ -8,6 +8,7 @@ class CPUTargetTracking {
 	private List<int []>  hits = new ArrayList<>();
 	private boolean vertical = false;
 	private boolean horizontal = false;
+	private boolean atEndOfShip = false;
 	
 	CPUTargetTracking(Ship shipHit, int[] hitPos){
 
@@ -42,6 +43,9 @@ class CPUTargetTracking {
 		return horizontal;
 	}
 
+	public boolean getEndOfShip(){
+		return atEndOfShip;
+	}
 	//setters
 	
 	public void setShip(Ship newShip){
@@ -58,6 +62,10 @@ class CPUTargetTracking {
 
 	public void setHorizontal(boolean horiz){
 		horizontal = horiz;
+	}
+
+	public void setEndOfShip(boolean eos){
+		atEndOfShip = eos;
 	}
 	//other methods
 	

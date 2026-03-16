@@ -7,7 +7,14 @@ class Game{
 	private Scanner kb = new Scanner (System.in);
 
 	Game(){
-		gameStart();
+		gameStart(1);
+		gameLoop();
+
+		gameOver();
+	}
+
+	Game(int difficulty){
+		gameStart(difficulty);
 		gameLoop();
 
 		gameOver();
@@ -22,9 +29,9 @@ class Game{
 		return player2;
 	}
 
-	void gameStart(){
+	void gameStart(int difficulty){
 		player1 = new Player("Player1");
-		player2 = new Cpu("CPU");
+		player2 = new Cpu("CPU", difficulty);
 		player1.fleetSetup();		
 		player1.printDefenseBoard();
 		System.out.println();
@@ -43,11 +50,13 @@ class Game{
 				continue;
 			}
 			
+			// checks if player2's fleet is destroyed and ends the game
 			if (player2.fleetDestroyed()){
 				System.out.println("Game Over! Player 1 Wins!\n");
 				break;
 			}
 			
+			// cpu finds a target and attacks
 			player2.attack(player1, pos);
 			
 			if (player1.fleetDestroyed()){
