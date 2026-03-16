@@ -41,9 +41,23 @@ class Game{
 
 	void gameLoop(){
 		int[] pos = {0,0};
+		Warships.clearScreen();
+
+		System.out.println("*DEBUG* Attack CPU Board");
+		player2.printAttackBoard();
+		System.out.println("*DEBUG*Defense CPU Board");
+		player2.printDefenseBoard();
+		System.out.println("Attack Board");
+		player1.printAttackBoard();
+		System.out.println("Defense Board");
+		player1.printDefenseBoard();
+
 		while(true){
+
+
 			System.out.print("Enter coordinates: ");
 			pos = UserInterface.posInput(kb);
+			Warships.clearScreen();
 			//attempts to execute attack if the player input non duplicate coordinates
 			if (!player1.attack(player2, pos)){
 				System.out.println("Cannot strike the same coordinate twice!");
@@ -63,7 +77,7 @@ class Game{
 				System.out.println("Game Over! Player 2 Wins!\n");
 				break;
 			}
-			
+
 			System.out.println("*DEBUG* Attack CPU Board");
 			player2.printAttackBoard();
 			System.out.println("*DEBUG*Defense CPU Board");
@@ -72,6 +86,7 @@ class Game{
 			player1.printAttackBoard();
 			System.out.println("Defense Board");
 			player1.printDefenseBoard();
+			
 		}
 		
 	}
