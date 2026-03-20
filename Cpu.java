@@ -17,6 +17,9 @@ class Cpu extends Player {
 
 	}
 
+	//This ship set up automatically places ships for the cpu
+	//it checks for collision and out of bounds
+	//this is a brute force method that can potentially continually place ships for many cpu cycles
 	void shipSetup(Ship ship){
 		int pos[] = {0,0};
 		String name = ship.getName();
@@ -37,7 +40,7 @@ class Cpu extends Player {
 
 	//executes an attack on the target player
 	//the pos paramater is not used but is needed for polymorphism
-	
+	//Uses either basic or advanced targeting depending on difficulty and if cpu has hit a ship	
 
 	boolean attack(Player target, int[] pos){
 		pos = new int[2];
@@ -46,13 +49,21 @@ class Cpu extends Player {
 			if (hitTargets.size() == 0 || difficulty == 1) {
 				pos = cpuTargeting();
 			} else {
+				//If the cpu has hit a ship and is on hard difficulty it will used advanced targeting
 				pos = advancedCpuTargeting(target);
 			}
+
+			//Obtains target node that will be attacked on the opponents board
+			//Obtains corresponding node on attack board for tracking
 			Node targetNode = target.getDefenseBoard().getBoard()[pos[0]][pos[1]];
 			Node attackBoardNode = getAttackBoard().getBoard()[pos[0]][pos[1]];
+			//If the target node has already been hit move back to the start of the loop
+			//This may result in wasted cpu cycles as it can continually target hit nodes especially late game
 			if (targetNode.getHit())
 				continue;	
 
+			//If the targeted node is occupied by a ship it displays a message to the user
+			//also sets appropriate nodes to state
 			if (targetNode.getOccupied() == true){
 				boolean isNewTarget = true;
 				String targetName = targetNode.getOccupant().getName();
@@ -63,31 +74,38 @@ class Cpu extends Player {
 				targetNode.setHit(true);
 				attackBoardNode.setContents("\u2611");
 				targetNode.getOccupant().setHullAt(targetNode.getHullIndex(), true);
+				//Checks if the ship that was hit was already in hit target list
 				for (CPUTargetTracking trackedTarget : hitTargets) {
 					if (trackedTarget.getShip() == targetNode.getOccupant()) {
 						isNewTarget = false;
 						trackedTarget.getHits().add(pos);
+						//If target is already hit, it compares the first hit to the next one
+						//to determine orientation
 						if (trackedTarget.getHits().get(0)[0] == trackedTarget.getHits().get(1)[0]){
 							trackedTarget.setHorizontal(true);
-							System.out.println("*DEBUG* Horizontal True!");
+							//System.out.println("*DEBUG* Horizontal True!");
 						}
 						else {
 							trackedTarget.setVertical(true);
-							System.out.println("*DEBUG* Vertical True!");
+							//System.out.println("*DEBUG* Vertical True!");
 						}
 
 					}
 				}
 
+				//If the attack is on a new target, add the new ship to the target tracking list
 				if (isNewTarget)
 					hitTargets.add(new CPUTargetTracking(targetNode.getOccupant(), pos));
 
+				//Checks if the ship was destroyed and displays a message
+				//Sets the ships destroyed status to true
 				if (targetNode.getOccupant().checkShipDestroyed()){
 					hitTargets.remove(0);
 					targetNode.getOccupant().setDestroyed(true);
 					System.out.printf("%s's %s has been destroyed!\n", target.getName(), targetName);
 				}
 			}
+			//If Attack missed display message and set attack board to display a missed hit
 			else {
 				System.out.printf("Enemy's attack at %c%d missed!\n", ColHash.intToChar(pos[1]), pos[0]);
 				attackBoardNode.setContents("\u25ef");
@@ -99,6 +117,7 @@ class Cpu extends Player {
 				}
 
 			}
+			//If attack is succesful (hit or miss) then return true
 			return true;
 		}
 	}
@@ -119,8 +138,14 @@ class Cpu extends Player {
 	public int[] advancedCpuTargeting(Player targetPlayer){
 		int pos[] = {0,0};
 		Node[][] enemyDefenseBoard = targetPlayer.getDefenseBoard().getBoard();
+
+		//huntedTarget is the ship the cpu is attempting to destroy
 		CPUTargetTracking huntedTarget = hitTargets.get(0);
+
+		//latestHit stores the coordinate of the last strike on the ship
+		//this is updated with subsequent hits
 		int[] latestHit = {0,0};
+		//if the end of the ship is reached then use the first hit location instead
 		if (huntedTarget.getEndOfShip() == false){
 			latestHit = huntedTarget.getHits().get(huntedTarget.getHits().size() - 1);
 		} else {
@@ -130,6 +155,10 @@ class Cpu extends Player {
 
 		if (hitTargets.size() == 0)
 			System.out.println("Something went wrong!");
+
+		//The search pattern is right, below, left, above
+		//If any of these positions have already been hit then it will skip and go to the next
+		//Also will skip a direction if the ship orientation is known
 
 		//search right of latest hit
 		if (latestHit[1] + 1 > 9 || huntedTarget.getVertical() == true) {

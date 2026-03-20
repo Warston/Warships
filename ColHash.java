@@ -1,11 +1,13 @@
 import java.util.HashMap;
 
+//This class contains hash maps to assign column names to ints and visa versa
 class ColHash{
 
 		static HashMap<Character, Integer> colMap = new HashMap<>();
 		static HashMap<Integer, Character> intToCharMap = new HashMap<>();
 
 		static{
+			//Alpha to int
 			colMap.put('a', 0);
 			colMap.put('b', 1);
 			colMap.put('c', 2);
@@ -39,6 +41,7 @@ class ColHash{
 			colMap.put('8', 8);
 			colMap.put('9', 9);
 
+			//int to char
 			intToCharMap.put(0, 'A');
 			intToCharMap.put(1, 'B');
 			intToCharMap.put(2, 'C');
@@ -50,6 +53,8 @@ class ColHash{
 			intToCharMap.put(8, 'I');
 			intToCharMap.put(9, 'J');
 		}
+
+		//methods to access the hashmap
 
 		public static int getHash(char col){
 			return colMap.get(col);

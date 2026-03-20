@@ -57,17 +57,20 @@ class UserInterface{
 			char char2 = lineInput.charAt(1);
 			char temp = ' ';
 
+			//Checks both characters and rejects input if both are alpha
 			if (alphaCheck(char1) && alphaCheck(char2)){
 				System.out.println("Can't input two letters!");
 				continue;
 			}
 
+			//Flips coordinates if character is in the second slot
 			if (alphaCheck(char1)){
 				temp = char1;
 				char1 = char2;
 				char2 = temp;
 			}
 
+			//Assigns cooridinates to integers based on their mapped values
 			try {
 				int1 = ColHash.getHash(char1);
 				int2 = ColHash.getHash(char2);
@@ -84,6 +87,8 @@ class UserInterface{
 
 	}
 
+	// gets input for vertical or horizontal placement
+	// only takes the first character
 	public static char orientationInput(){
 		Scanner kb = new Scanner(System.in);
 		String input = kb.nextLine();

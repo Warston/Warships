@@ -1,6 +1,7 @@
 import java.util.List;
 import java.util.ArrayList;
 
+//This class is used for the cpu to track a ship that it has hit
 class CPUTargetTracking {
 
 	private Ship ship = null;
@@ -8,6 +9,7 @@ class CPUTargetTracking {
 	private List<int []>  hits = new ArrayList<>();
 	private boolean vertical = false;
 	private boolean horizontal = false;
+	//atEndOfShip is needed to tell the cpu it has attacked past the end of a ship
 	private boolean atEndOfShip = false;
 	
 	CPUTargetTracking(Ship shipHit, int[] hitPos){

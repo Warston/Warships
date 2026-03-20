@@ -1,8 +1,11 @@
 import java.util.HashMap;
-
+//Defines boards
+//Boards are a collection of nodes that make up the boards the players control
 class Board{
+	//A board is a 2 dimensional array of Nodes
 	private Node[][] board; 
 
+	//Constructor creates a new board and intializes all nodes to default values
 	Board(){
 		int posX = 0;
 		int posY = 0;
@@ -19,14 +22,22 @@ class Board{
 		}
 	}
 
+	//getters
+	
 	public Node[][] getBoard(){
 		return board;
 	}
+
+	//setters
 
 	public void setBoard(Node[][] newBoard){
 		board = newBoard;
 	}
 
+	//other methods
+
+	//prints out the board to the terminal
+	//the columns are specified manually
 	public void printBoard(){
 		int row = 0;
 		System.out.print("   ");
@@ -45,6 +56,7 @@ class Board{
 		}
 	}
 
+	//Used to place a ship on the board during fleet setup stage
 	public boolean placeShip(int length, int[] pos,Ship ship, boolean vertical){
 		//check for collision
 		boolean collision = false;
@@ -59,6 +71,10 @@ class Board{
 			vert = 0;
 			horiz = 1;
 		}
+
+		//Messy code
+		//uses vert and horiz to cancel out certain values
+		//this lets ships be placed vertically or horizontally
 		if ((pos[1] * horiz) + (pos[0] * vert) + length > 10 || (pos[0] * horiz) + (pos[1] * vert) > 9){
 			System.out.println("Cannot place out of bounds!");
 			return false;
@@ -68,6 +84,7 @@ class Board{
 				collision = true;
 		}
 		if (collision == true){
+			System.out.println("Cannot collide with other ships!");
 			return false;
 		}
 		

@@ -1,20 +1,15 @@
 import java.util.Scanner;
 
+//Warships is a game that involves placing a fleet of naval ships on a grid and attempting to destroy the opponents ships
+//The game ends when all of one player's ships are destroyed
 class Warships{
 	public static void main(String[] args){
 		
 
 		clearScreen();
 		Scanner kb = new Scanner(System.in);
-		/*
-		player1.printDefenseBoard();
 
-		System.out.println();
-		player1.getDefenseBoard().getBoard()[0][0].setContents("\u3042");
-
-		player1.printDefenseBoard();
-		*/
-
+		//Call functions to print main menu and take in user input
 		int userSelection = 0;
 		while(true){
 			UserInterface.printMainMenu();
@@ -33,6 +28,8 @@ class Warships{
 
 	}
 
+	
+	//Handles users input from menu
 	static void menuSelection(int choice){
 		clearScreen();
 		switch(choice){
@@ -54,11 +51,15 @@ class Warships{
 
 		}
 	}
+	//Used throughout program to clear the terminal screen
+	//Occasionally has an issue where the input ends up at the bottom of the terminal for some reason
+	//Moving where you call clearScreen() can sometimes fix this issue
 	public static void clearScreen(){
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
 	}
 
+	//Asks the user to choose a difficulty then starts a new game
 	public static void newGame(){
 		Scanner kb = new Scanner(System.in);
 		int diffSelection = 1;
