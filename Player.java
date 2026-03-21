@@ -180,7 +180,7 @@ class Player{
 			Warships.clearScreen();
 			String targetName = targetNode.getOccupant().getName();
 			System.out.printf("Strike at %c%d hit confirmed!\n", ColHash.intToChar(pos[1]), pos[0]);
-			System.out.printf("Strike on %s confirmed!\n", targetName);
+			System.out.printf("Strike on %s length %d confirmed!\n", targetName, targetNode.getOccupant().getLength());
 			targetNode.setContents("\u2613");
 			targetNode.setHit(true);
 			attackBoardNode.setContents("\u2611");
