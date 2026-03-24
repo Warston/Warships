@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 //A fleet contains the list of ships a player controls
-class Fleet{
+class Fleet implements java.io.Serializable {
 
 	private List<Ship> fleet = new ArrayList<>();
 

@@ -7,9 +7,9 @@ class UserInterface{
 
 		System.out.println("Welcome to Warships!");
 		System.out.println("1) New Game");
-		//System.out.println("2) Continue Game In Progress");
+		System.out.println("2) Continue Game In Progress");
 		//System.out.println("3) Multiplayer");
-		System.out.println("2) Exit Game");
+		System.out.println("3) Exit Game");
 
 	}
 
@@ -34,11 +34,31 @@ class UserInterface{
 		System.out.println(art);
 	}
 
+	public static int inGameAction() {
+		Scanner kb = new Scanner(System.in);
+		System.out.print("""
+				What would you like to do?
+				1) Attack
+				2) Save and quit
+				3) Quit without saving
+				""");
+		try {
+			int choice = kb.nextInt();
+			return choice;
+		}
+		catch (Exception e) {
+			System.out.println("Invalid Input");
+			Warships.clearScreen();
+			return -1;
+		}
+	}
+
 	//This function takes in user coordinate inputs
 	//accepts either 2 integers or a single character and an integer
 	//if two integers are used it uses the first as the row coordinate and the second as the column
 	//if a character is used it is automatically used as the column coordinate as shown by the game board
-	public static int[] posInput(Scanner kb){
+	public static int[] posInput(){
+		Scanner kb = new Scanner(System.in);
 		while (true){
 			String lineInput = "";
 			int int1;
