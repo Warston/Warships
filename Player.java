@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 //Defines a player's objects like boards and fleet and the actions they can take
-class Player{
+class Player implements java.io.Serializable {
 
 	//Players have two boards both boards are not visible to the opponent
 	//The defense board is where they place their ships and track hits on their ships
@@ -18,7 +18,7 @@ class Player{
 	//each player has a fleet which is made up of ships
 	//the ships are defined in the fleet class and are standard for each player
 	private Fleet fleet = new Fleet();
-	private Scanner kb = new Scanner (System.in);
+	private transient Scanner kb = new Scanner (System.in);
 
 
 	Player(String newName){
@@ -103,7 +103,7 @@ class Player{
 		while (true){
 			System.out.printf("Input %s Coordinate (Length %d)", name, length);
 			try{
-				pos = UserInterface.posInput(kb);
+				pos = UserInterface.posInput();
 				if (defenseBoard.getBoard()[pos[0]][pos[1]].getOccupied()){
 					System.out.println("That spot is already occupied!");
 					continue;

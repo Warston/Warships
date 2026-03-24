@@ -1,10 +1,11 @@
 import java.util.Scanner;
+import java.io.*;
 
-class Game{
+class Game implements java.io.Serializable{
 
 	private Player player1 = new Player("Player1");
 	private Player player2 = new Player("Player2");
-	private Scanner kb = new Scanner (System.in);
+	private transient Scanner kb = new Scanner (System.in);
 
 	//Left the no parameter constructor incase it is needed to start an easy difficulty game
 	Game(){
@@ -67,47 +68,76 @@ class Game{
 
 	//Main game loop. Prints out attack and defense boards and takes turns between players attack
 	void gameLoop(){
+		Scanner kb = new Scanner(System.in);
+		boolean quit = false;
 		int[] pos = {0,0};
 		Warships.clearScreen();
-		while(true){
+		while(!quit){
 
 
-			//These statements can be uncommented to display enemy attack boards for debugging
-			//System.out.println("*DEBUG* Attack CPU Board");
-			//player2.printAttackBoard();
-			//System.out.println("*DEBUG*Defense CPU Board");
-			//player2.printDefenseBoard();
-			System.out.println("Attack Board");
-			player1.printAttackBoard();
-			System.out.println("Defense Board");
-			player1.printDefenseBoard();
+				System.out.println("Attack Board");
+				player1.printAttackBoard();
+				System.out.println("Defense Board");
+				player1.printDefenseBoard();
+			switch (UserInterface.inGameAction()){
+				case 1:
+					Warships.clearScreen();
+					//These statements can be uncommented to display enemy attack boards for debugging
+					//System.out.println("*DEBUG* Attack CPU Board");
+					//player2.printAttackBoard();
+					//System.out.println("*DEBUG*Defense CPU Board");
+					//player2.printDefenseBoard();
+					System.out.println("Attack Board");
+					player1.printAttackBoard();
+					System.out.println("Defense Board");
+					player1.printDefenseBoard();
 
-			System.out.print("Enter coordinates: ");
-			pos = UserInterface.posInput(kb);
-			//attempts to execute attack if the player input non duplicate coordinates
-			if (!player1.attack(player2, pos)){
-				Warships.clearScreen();
-				System.out.println("Cannot strike the same coordinate twice!");
-				continue;
+
+					System.out.print("Enter coordinates: ");
+					pos = UserInterface.posInput();
+					//attempts to execute attack if the player input non duplicate coordinates
+					if (!player1.attack(player2, pos)){
+						Warships.clearScreen();
+						System.out.println("Cannot strike the same coordinate twice!");
+						continue;
+					}
+					
+					// checks if player2's fleet is destroyed and ends the game if true
+					if (player2.fleetDestroyed()){
+						gameOver(player1.getName());
+						break;
+					}
+					
+					// cpu finds a target and attacks
+					player2.attack(player1, pos);
+					
+					//checks if player1's fleet is destroyed and ends the game if true
+					if (player1.fleetDestroyed()){
+						gameOver(player2.getName());
+						break;
+					}
+				
+			
+
+					break;
+				case 2:
+					System.out.println("Input filename: ");
+					saveGame(kb.next());
+					System.exit(0);
+					break;
+				case 3:
+					quit = true;
+					Warships.clearScreen();
+					break;
+				default:
+					Warships.clearScreen();
+					System.out.println("Invalid Choice");
+					continue;
+
+			
 			}
-			
-			// checks if player2's fleet is destroyed and ends the game if true
-			if (player2.fleetDestroyed()){
-				gameOver(player1.getName());
-				break;
-			}
-			
-			// cpu finds a target and attacks
-			player2.attack(player1, pos);
-			
-			//checks if player1's fleet is destroyed and ends the game if true
-			if (player1.fleetDestroyed()){
-				gameOver(player2.getName());
-				break;
-			}
-			
-		}
 		
+		}
 	}
 
 	//Displays all boards at end of game
@@ -128,6 +158,25 @@ class Game{
 		kb.nextLine();
 		Warships.clearScreen();
 	}
+
+	void saveGame(String saveName){
+		try {
+			FileOutputStream fos = new FileOutputStream(saveName);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			
+			oos.writeObject(this);
+			oos.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			System.exit(0);
+		}
+	}
+
+	public void resumeGame(){
+		gameLoop();
+	}
+
 
 
 

@@ -1,7 +1,7 @@
 import java.util.HashMap;
 //Defines boards
 //Boards are a collection of nodes that make up the boards the players control
-class Board{
+class Board implements java.io.Serializable{
 	//A board is a 2 dimensional array of Nodes
 	private Node[][] board; 
 

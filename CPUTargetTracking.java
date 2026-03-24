@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 //This class is used for the cpu to track a ship that it has hit
-class CPUTargetTracking {
+class CPUTargetTracking implements java.io.Serializable {
 
 	private Ship ship = null;
 	private String shipName = " ";

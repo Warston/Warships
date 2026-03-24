@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.io.*;
 
 //Warships is a game that involves placing a fleet of naval ships on a grid and attempting to destroy the opponents ships
 //The game ends when all of one player's ships are destroyed
@@ -19,6 +20,7 @@ class Warships{
 			catch(Exception e){
 				clearScreen();
 				System.out.println("Invalid input");
+				System.out.println(e);
 				kb.nextLine();
 				continue;
 			}
@@ -32,17 +34,21 @@ class Warships{
 	//Handles users input from menu
 	static void menuSelection(int choice){
 		clearScreen();
+		Scanner kb = new Scanner(System.in);
 		switch(choice){
 			case 1:
 				newGame();
 				break;
-			/*
 			case 2:
+				System.out.print("Enter file name to load: ");
+				loadGame(kb.next());
+				break;
+			/*
 			case 3:
 				System.out.println("Feature not yet implemented");
 				break;
 			*/
-			case 2:
+			case 3:
 				System.exit(0);
 			default:
 				System.out.println("Invalid Option");
@@ -85,4 +91,28 @@ class Warships{
 		Game gameInstance = new Game(diffSelection);
 	
 	}
+
+	public static void loadGame(String fileName) {
+		Game gameInstance = null;
+		try {
+			FileInputStream fis = new FileInputStream(fileName);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			gameInstance = (Game) ois.readObject();
+		}
+		catch (FileNotFoundException e){
+			System.out.println(e);
+		}
+		catch (IOException e){
+			System.out.println(e);
+		}
+		catch (ClassNotFoundException e){
+			System.out.println(e);
+		}
+		if (gameInstance != null)
+			gameInstance.resumeGame();
+	}
+
+
+
+
 }

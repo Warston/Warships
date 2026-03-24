@@ -1,5 +1,5 @@
 //The node class defines the spaces on each board
-class Node{
+class Node implements java.io.Serializable {
 	//Position is its location on the board for easy reference by other classes
 	private int[] position = {0,0};
 	

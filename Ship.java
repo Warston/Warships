@@ -1,5 +1,5 @@
 //Defines a ship
-class Ship{
+class Ship implements java.io.Serializable {
 	
 	private int length = 0;
 	private String name = "";
